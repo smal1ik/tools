@@ -49,7 +49,7 @@ if ! command -v uv &> /dev/null; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
-
+source "$BOT_DIR/bin/activate"
 if [ -f "uv.lock" ]; then
   echo "⚡ Обнаружен uv.lock"
   uv sync --frozen
@@ -59,7 +59,7 @@ elif [ -f "requirements.txt" ]; then
 else
   echo "⚠️ Не найден ни requirements.txt, ни uv.lock — пропускаем установку зависимостей."
 fi
-
+deactivate
 # SERVICE_FILE=/etc/systemd/system/$BOT_NAME.service
 SERVICE_FILE=/etc/systemd/system/bot.service
 
