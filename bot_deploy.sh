@@ -65,7 +65,7 @@ SERVICE_FILE=/etc/systemd/system/bot.service
 
 # --- Создание systemd-сервиса ---
 echo "⚙️ Создаём systemd-сервис..."
-sudo bash -c "cat > $SERVICE_FILE" <<EOF
+sudo tee "$SERVICE_FILE" >/dev/null <<EOF
 [Unit]
 Description=$BOT_NAME bot
 After=syslog.target
@@ -89,7 +89,7 @@ sudo systemctl restart bot
 if grep -q "arq" requirements.txt 2>/dev/null || grep -q "arq" pyproject.toml 2>/dev/null || grep -q "arq" uv.lock 2>/dev/null; then
   echo "🧩 Обнаружен arq — создаём сервис для фонового воркера..."
   SCHEDULER_FILE=/etc/systemd/system/task.service
-  sudo bash -c "cat > $SCHEDULER_FILE" <<EOF
+  sudo tee "$SCHEDULER_FILE" >/dev/null <<EOF
 [Unit]
 Description=${BOT_NAME} ARQ Scheduler
 After=syslog.target
