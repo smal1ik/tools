@@ -52,7 +52,7 @@ fi
 source "$BOT_DIR/bin/activate"
 if [ -f "uv.lock" ]; then
   echo "⚡ Обнаружен uv.lock"
-  uv sync --frozen
+  uv sync --activate
 elif [ -f "requirements.txt" ]; then
   echo "🐍 Обнаружен requirements.txt"
   uv pip install -r requirements.txt
