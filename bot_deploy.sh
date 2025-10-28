@@ -23,14 +23,17 @@ echo "🚀 Разворачиваем бота '$BOT_NAME' из $REPO_URL (ве�
 if [ ! -d "$BOT_DIR" ]; then
   echo "📁 Папка не найдена — создаём $BOT_DIR..."
   mkdir -p "$BOT_DIR"
+fi
 
 if ! command -v python3.11 &> /dev/null; then
   echo "🐍 Python 3.11 не найден — устанавливаем..."
-  sudo add-apt-repository ppa:deadsnakes/ppa
+  sudo add-apt-repository ppa:deadsnakes/ppa -y
   sudo apt update
   sudo apt install python3.11-full
 else
   echo "✅ Python 3.11 уже установлен." 
+fi
+
 python3.11 -m venv "$BOT_DIR"
 
 cd "$BOT_DIR"
@@ -81,7 +84,7 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl enable bot
-sudo systemctl restart restart
+sudo systemctl restart bot
 
 if grep -q "arq" requirements.txt 2>/dev/null || grep -q "arq" pyproject.toml 2>/dev/null || grep -q "arq" uv.lock 2>/dev/null; then
   echo "🧩 Обнаружен arq — создаём сервис для фонового воркера..."
