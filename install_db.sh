@@ -2,9 +2,9 @@ set -e
 
 POSTGRES_PASS=$1
 REDIS_PASS=$1
-if [ -z "$DB_PASS" ]; then
+if [ -z "$POSTGRES_PASS" ]; then
   echo "❌ Укажи пароль!"
-  echo "Пример: sudo ./install_db.sh 356211kKmM"
+  echo "Пример: sudo ./install_db.sh 123456789"
   exit 1
 fi
 
