@@ -9,5 +9,5 @@ bash <(curl -s https://raw.githubusercontent.com/smal1ik/tools/main/bot_deploy.s
 
 ### install_db
 ```bash 
-bash <(curl -s https://raw.githubusercontent.com/you/tools/main/install_db.sh) [password db]
+bash <(curl -s https://raw.githubusercontent.com/smal1ik/tools/main/install_db.sh) [password db]
 ```
