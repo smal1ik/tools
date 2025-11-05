@@ -1,7 +1,6 @@
 #!/bin/bash
 # Скрипт для деплоя бота из git-репозитория без использования контейнера
-# Usage: ./deploy.sh https://github.com/you/mybot.git [branch]
-
+# Usage: ./deploy.sh https://github.com/smallik1/bot_deploy.git [branch]
 
 REPO_URL=$1
 BRANCH=${2:-master}
