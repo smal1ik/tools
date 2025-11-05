@@ -1,7 +1,12 @@
 set -e
 
+if [ "$EUID" -ne 0 ]; then
+  exec sudo bash "$0" "$@"
+fi
+
 POSTGRES_PASS=$1
 REDIS_PASS=$1
+
 if [ -z "$POSTGRES_PASS" ]; then
   echo "❌ Укажи пароль!"
   echo "Пример: sudo ./install_db.sh 123456789"
