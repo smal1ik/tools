@@ -33,6 +33,17 @@ else
   echo "PostgreSQL уже установлен."
 fi
 
+PG_CONF=$(sudo -u postgres psql -t -c "SHOW config_file;" | xargs dirname)/postgresql.conf
+PG_HBA=$(sudo -u postgres psql -t -c "SHOW hba_file;" | xargs)
+
+echo "📡 Настраиваем доступ PostgreSQL..."
+sed -i "s/^#*listen_addresses.*/listen_addresses = '*'/" "$PG_CONF"
+echo "host all all 0.0.0.0/0 md5" >> "$PG_HBA"
+echo "host all all ::/0 md5" >> "$PG_HBA"
+
+systemctl restart postgresql
+systemctl enable postgresql
+
 # --- Настройка PostgreSQL ---
 echo "Настраиваем PostgreSQL..."
 
@@ -63,15 +74,13 @@ fi
 echo "⚙️ Настраиваем Redis..."
 
 REDIS_CONF="/etc/redis/redis.conf"
+sed -i "s/^#*bind .*/bind 0.0.0.0/" "$REDIS_CONF"
+sed -i "s/^protected-mode yes/protected-mode no/" "$REDIS_CONF"
 
-# Меняем конфиг (устанавливаем пароль и логин)
-sudo sed -i "s/^# requirepass .*/requirepass $REDIS_PASS/" "$REDIS_CONF"
-
-# Если Redis >=7, добавим ACL для пользователя default
-if grep -q "user default" "$REDIS_CONF"; then
-  sudo sed -i "s/^user default .*/user default on >$REDIS_PASS allcommands allkeys/" "$REDIS_CONF"
+if grep -q "^#*requirepass" "$REDIS_CONF"; then
+  sed -i "s/^#*requirepass .*/requirepass $REDIS_PASS/" "$REDIS_CONF"
 else
-  echo "user default on >$REDIS_PASS allcommands allkeys" | sudo tee -a "$REDIS_CONF" >/dev/null
+  echo "requirepass $REDIS_PASS" >> "$REDIS_CONF"
 fi
 
 # Включаем автозапуск Redis
