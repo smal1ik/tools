@@ -1,3 +1,8 @@
+#!/bin/bash
+# Скрипт для деплоя postgreSQL + redis
+# Usage: ./install_db.sh https://github.com/smallik1/tools.git [password]
+
+
 if [ "$EUID" -ne 0 ]; then
   exec sudo bash "$0" "$@"
 fi
