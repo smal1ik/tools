@@ -72,7 +72,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=$BOT_DIR
-ExecStart=$BOT_DIR/bin/python /home/bot/bot.py
+ExecStart=$BOT_DIR/.venv/bin/python /home/bot/bot.py
 Restart=always
 RestartSec=10
 
@@ -94,7 +94,7 @@ After=network.target
 Type=simple
 User=$USER
 WorkingDirectory=$BOT_DIR
-ExecStart=$BOT_DIR/bin/arq app.scheduler.worker.WorkerSettings
+ExecStart=$BOT_DIR/.venv/bin/arq app.scheduler.worker.WorkerSettings
 RestartSec=10
 Restart=always
 
